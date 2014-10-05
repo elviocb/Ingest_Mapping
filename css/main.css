@@ -1,0 +1,13 @@
+#status {
+    width: auto;
+    margin: 60px;
+}
+
+.form-inline {
+    margin: auto;
+}
+
+.status-div {
+    widows: 200px;
+    dosplay: inline-block;
+}
