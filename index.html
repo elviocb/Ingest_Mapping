@@ -1,347 +1,362 @@
-		<!DOCTYPE html>
+<!DOCTYPE html>
 <html ng-app='mapping'>
+
 <head>
-	<title>Ingest Mapping</title>
-	<script type="text/javascript" src='js/angular.min.js'></script>
-	<script type='text/javascript' src="js/angular-route.min.js"></script>
-	<script type="text/javascript" src='js/main.js'></script>
-	<script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.19.min.js"></script>
-	<script src='js/head.load.min.js'></script>
-	<base href="/">
+    <title>Ingest Mapping</title>
+    <script type="text/javascript" src='js/angular.min.js'></script>
+    <script type='text/javascript' src="js/angular-route.min.js"></script>
+    <script type="text/javascript" src='js/main.js'></script>
+    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.19.min.js"></script>
+    <script src='js/head.load.min.js'></script>
+    <base href="/">
 </head>
-<body>
-	<!-- HEADER AND NAVBAR -->
-	<header>
-		<nav class="navbar navbar-default">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<a class="navbar-brand" href="/">Angular Routing Example</a>
-				</div>
 
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#"><i class="fa fa-home"></i> Home</a></li>
-					<li><a href="#about"><i class="fa fa-shield"></i> About</a></li>
-					<li><a href="#contact"><i class="fa fa-comment"></i> Contact</a></li>
-				</ul>
-			</div>
-		</nav>
-	</header>
+<body ng-controller='MainCtrl as main'>
 
-	<!-- MAIN CONTENT AND INJECTED VIEWS -->
-	<div id="main">
-
-		<!-- angular templating -->
-		<!-- this is where content will be injected -->
-		<div ng-view></div>
-
-
-
-
-
-
-
-
-	</div>
-	
-	<div class='container-fluid' ng-controller='MainCtrl as main'>
-	
-
-    
-    <!-- Button trigger modal -->
-<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-  Add Entry
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="myModalLabel">Entry Form</h4>
-      </div>
-      <div class="modal-body">
-       <!-- !!!!!!!!!!!!!!!!!!!!...-->
-           <!-- MOCKUP -->
-    <div class="container form">
-
-	    <div class="row status-area">
-	        <div class="col-md-4  col-sm-4 col-xs-12">
-                <!-- Status Ingest--> 
-                <div class="form-group">
-                    <label for="optionsIngest">Ingest</label>
-                    <select 
-                        ng-model='statusIngest' class="form-control" id="optionsIngest"
-                        ng-options='value.stat as value.label group by value.group for value in statusOptionsIngest'></select>
-                </div> 
-
-            </div>
-	        <div class="col-md-4  col-sm-4 col-xs-12">
-                <!-- Status Proxy--> 
-                <div class="form-group">
-                    <label for="optionsProxy">Proxy</label>
-                    <select 
-                        ng-model='statusProxy' class="form-control"  id="optionsProxy"
-                        ng-options='value.stat as value.label group by value.group for value in statusOptionsProxy'></select>
-                </div> 
-
-            </div>
-	        <div class="col-md-4  col-sm-4 col-xs-12">
-                <!-- Status Cataloging--> 
-                <div class="form-group "> 
-                    <label for="optionsCataloging">Cataloging</label>
-                    <select 
-                        ng-model='statusCataloging' class="form-control" id="optionsCataloging"
-                        ng-options='value.stat as value.label group by value.group for value in statusOptionsCataloging'></select>
-                </div> 
-            </div>
-	    </div>
-	    <div class="row input-area">
-            <form class="form-horizontal"> 
-
-               <!-- Name -->  
-                <div class="form-group">
-                    <label class="control-label col-xs-2" for="name">Name</label>
-                    <div class="col-xs-10">
-                        <input type="text" class="form-control" id="name" placeholder='Name' ng-model='fileName'>
-                    </div>
-                </div>
-
-                <!-- Path -->  
-                <div class="form-group">
-                    <label class="control-label col-xs-2" for="path">Path</label>
-                    <div class="col-xs-10">
-                        <input type="text" class="form-control" id="path" placeholder='Path' ng-model='filePath'>
-                    </div>
-                </div>
-
-                <!-- Size -->  
-                <div class="form-group">
-                    <label class="control-label col-xs-2" for="size">Size</label>
-                    <div class="col-xs-10">
-                        <input type="text" class="form-control" id="size" placeholder='Size' ng-model='fileSize'>
-                    </div>
-                </div> 
-
-                <!-- Duration -->  
-                <div class="form-group"> 
-                    <label class="control-label col-xs-2" for="duration">Duration</label>
-                    <div class="col-xs-10">
-                        <input type="text" class="form-control " id="duration" placeholder='Duration' ng-model='fileDuration'>
-                    </div>
-                </div>
-
-                <!-- Codec --> 
-                <div class="form-group">
-                    <label class="control-label col-xs-2" for="codec">Codec</label>
-                    <div class="col-xs-10">
-                        <select   
-                            ng-model='fileCodec' class="form-control" id="codec"
-                            ng-options='value.stat as value.label group by value.group for value in fileOptionsCodec'></select>
-                    </div>
-                </div>
-
-                <!-- Resolution --> 
-                <div class="form-group">
-                    <label class="control-label col-xs-2" for="resolution">Resolution</label>
-                    <div class="col-xs-10">    
-                        <select 
-                            ng-model='fileResolution' class="form-control" id="resolution"
-                            ng-options='value.stat as value.label group by value.group for value in fileOptionsResolution'></select>
-                    </div>
-                </div>				    
-
-                <!-- Format --> 
-                <div class="form-group">
-                    <label class="control-label col-xs-2" for="format">Format</label>
-                    <div class="col-xs-10">    
-                        <select 
-                            ng-model='fileFormat' class="form-control" id="format"
-                            ng-options='value.stat as value.label group by value.group for value in fileOptionsFormat'></select>
-                    </div>
-                </div>
-
-                <!-- Physical Type --> 
-                <div class="form-group">
-                    <label class="control-label col-xs-2" for="physical">Type</label>
-                    <div class="col-xs-10">    
-                        <select 
-                            ng-model='filePhysicalType' class="form-control" id="physical"
-                            ng-options='value.stat as value.label group by value.group for value in fileOptionsPhysicalType'></select>
-                    </div>
-                </div>
-
-                <!-- Scan Type --> 
-                <div class="form-group">
-                    <label class="control-label col-xs-2" for="scan">Scan Type</label>
-                    <div class="col-xs-10">    
-                        <select 
-                            ng-model='fileScanType' class="form-control" id="scan"
-                            ng-options='value.stat as value.label group by value.group for value in fileOptionsScanType'></select>
-                    </div>
-                </div>              
-
-                <!-- Idiom --> 
-                <div class="form-group">
-                    <label class="control-label col-xs-2" for="idiom">Idiom</label>
-                    <div class="col-xs-10">    
-                        <select 
-                            ng-model='fileIdiom' class="form-control" id="idiom"
-                            ng-options='value.stat as value.label group by value.group for value in fileOptionsIdiom'></select>
-                    </div>
-                </div>
-
-                <!-- Aspect --> 
-                <div class="form-group">
-                    <label class="control-label col-xs-2" for="aspect">Aspect</label>
-                    <div class="col-xs-10">    
-                        <select 
-                            ng-model='fileAspect' class="form-control" id="aspect"
-                            ng-options='value for value in fileOptionsAspect'></select>
-                    </div>
-                </div>
-
-                <!-- Frame Rate --> 
-                <div class="form-group">
-                    <label class="control-label col-xs-2" for="rate">Frame Rate</label>
-                    <div class="col-xs-10">    
-                        <select 
-                            ng-model='fileFrameRate' class="form-control" id="rate"
-                            ng-options='value for value in fileOptionsFrameRate'></select>
-                    </div>
-                </div>
-
-                <!-- Audio --> 
-                <div class="form-group">
-                    <label class="control-label col-xs-2" for="audio">Audio</label>
-                    <div class="col-xs-10">    
-                        <select 
-                            ng-model='fileAudioTrack' class="form-control" id="audio"
-                            ng-options='value for value in fileOptionsAudioTrack'></select>
-                    </div>
-                </div>
-
-            </form>             
-         
+    <!-- ALERT MESSAGES -->
+    <div>
+        
+        <!-- Success Alert -->
+        <div id="myAlertSuccess" class="alert fade alert-success" ng-class="{in : successStatusAlert}">
+           <a href="#" class="alert-close close" data-dismiss="alert">&times;</a>
+           <strong>Success!</strong> the result is successful.
         </div>
+        <button type="button" class="btn btn-danger btn-alert" ng-click="setAlertSuccessOn()">Set On</button>
+        <button type="button" class="btn btn-danger btn-alert" ng-click="setAlertSuccessOff()">Set Off</button>
+        <button type="button" class="btn btn-danger btn-alert" ng-click="status()">Status</button>
 
         
-    </div><!-- END CONTAINER-->
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" ng-click="addEntry()">Save changes</button>
-      </div>
     </div>
-  </div>
-</div>
+    <!-- end alert messages -->
     
     
-	<!-- END MOCKUP -->
-		
-		
-		<div class="row">
-			
-			
-			
-			<!-- REALTIME DISPLAY -->
 
-			<section class='displayForm'>
-				<p class='entryOutput'>{{statusIngest}}</p>
-				<p class='entryOutput'>{{statusProxy}}</p>
-				<p class='entryOutput'>{{statusCataloging}}</p>
-				<p class='entryOutput'>{{fileName}}</p>
-				<p class='entryOutput'>{{filePath}}</p>
-				<p class='entryOutput'>{{fileSize}}</p>
-				<p class='entryOutput'>{{fileDuration}}</p>
-				<p class='entryOutput'>{{fileCodec}}</p>
-				<p class='entryOutput'>{{fileResolution}}</p>
-				<p class='entryOutput'>{{fileFormat}}</p>
-				<p class='entryOutput'>{{filePhysicalType}}</p>
-				<p class='entryOutput'>{{fileScanType}}</p>
-				<p class='entryOutput'>{{fileIdiom}}</p>
-				<p class='entryOutput'>{{fileAspect}}</p>
-				<p class='entryOutput'>{{fileFrameRate}}</p>
-				<p class='entryOutput'>{{fileAudioTrack}}</p>
-			</section>
-			
-			<section>
-				<ul>
-					<li><button type="submit" class="btn btn-primary" ng-click='updateScreen()'>Refresh</button></li>
-					<li><button type="submit" class="btn btn-primary" ng-show='addBt' ng-click='addEntry()'>Add Entry</button></li>
-					<li><button type="submit" class="btn btn-primary" ng-show='updateBt' ng-click='updateEntry($$watchers)'>Update Entry</button></li>
-					<li></li>				
-				</ul>
-			</section>
-			
+    
+    <!-- HEADER AND NAVBAR -->
+    <header>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/">Angular Routing Example</a>
+                </div>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#"><i class="fa fa-home"></i> Home</a>
+                    </li>
+                    <li><a href="#about"><i class="fa fa-shield"></i> About</a>
+                    </li>
+                    <li><a href="#contact"><i class="fa fa-comment"></i> Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- MAIN CONTENT AND INJECTED VIEWS -->
+    <div id="main">
+
+        <!-- angular templating -->
+        <!-- this is where content will be injected -->
+        <div ng-view></div>
 
 
-		</div><!-- END ROW -->
-
-		<table class="table table-striped">
-		  <thead>
-		    <tr>
-		      <th>ID</th>
-		      <th>Updated</th>
-		      <th>Created</th>
-		      <th>#</th>
-		      <th>Ingest</th>
-		      <th>Proxy</th>
-		      <th>Cataloging</th>
-		      <th>Name</th>
-		      <th>Path</th>
-		      <th>Size</th>
-		      <th>Duration</th>
-		      <th>Codec</th>
-		      <th>Resolution</th>
-		      <th>Format</th>
-		      <th>Type</th>
-		      <th>Scan</th>
-		      <th>Idiom</th>
-		      <th>Aspect</th>
-		      <th>FPS</th>
-		      <th>Audio</th>
-
-		    </tr>
-		  </thead>
-		  <tbody>
-		    <tr ng-repeat='key in allEntrys'>
-		      <td>{{key.objectId}}</td> 
-		      <td>{{key.updatedAt}}</td> 
-		      <td>{{key.createdAt}}</td>
-		      <td>{{$index}}</td>  
-		      <td>{{key.statusIngest}}</td> 
-		      <td>{{key.statusProxy}}</td> 
-		      <td>{{key.statusCataloging}}</td> 
-		      <td>{{key.fileName}}</td> 
-		      <td>{{key.filePath}}</td> 
-		      <td>{{key.fileSize}}</td> 
-		      <td>{{key.fileDuration}}</td> 
-		      <td>{{key.fileCodec}}</td> 
-		      <td>{{key.fileResolution}}</td> 
-		      <td>{{key.fileFormat}}</td> 
-		      <td>{{key.filePhysicalType}}</td> 
-		      <td>{{key.fileScanType}}</td> 
-		      <td>{{key.fileIdiom}}</td> 
-		      <td>{{key.fileAspect}}</td> 
-		      <td>{{key.fileFrameRate}}</td> 
-		      <td>{{key.fileAudioTrack}}</td> 
-		      <td><button type="submit" class="btn btn-primary" ng-click='deleteEntry($$watchers, $index, $event)'>Delete Entry</button></td> 
-		      <td><button type="submit" class="btn btn-primary" ng-click='editEntry($$watchers, $index, $event)'>Edit Entry</button></td> 
 
 
-		      <!-- NG-REPEAT END -->  
-		    </tr>
-		  </tbody>
-		  <!-- END TABLE -->
-		</table>
 
 
-	</div>
-	
-	<script>
-		head.js('css/bootstrap.min.css', 'css/main.css', 'js/jquery-2.1.1.min.js', 'js/bootstrap.min.js');
-	</script>
+
+
+    </div>
+
+    <div class='container-fluid'>
+
+
+        
+        <!-- Button trigger modal -->
+        <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+            Add Entry
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">                
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true" id="close-modal">&times;</span><span class="sr-only">Close</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Entry Form</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <!-- FORM -->
+                        <div class="form">
+
+                            <div class="row status-area">
+                                <div class="col-md-4  col-sm-4 col-xs-12">
+                                    <!-- Status Ingest-->
+                                    <div class="form-group">
+                                        <label for="optionsIngest">Ingest</label>
+                                        <select ng-model='statusIngest' class="form-control" id="optionsIngest" ng-options='value.stat as value.label group by value.group for value in statusOptionsIngest'></select>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-4  col-sm-4 col-xs-12">
+                                    <!-- Status Proxy-->
+                                    <div class="form-group">
+                                        <label for="optionsProxy">Proxy</label>
+                                        <select ng-model='statusProxy' class="form-control" id="optionsProxy" ng-options='value.stat as value.label group by value.group for value in statusOptionsProxy'></select>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-4  col-sm-4 col-xs-12">
+                                    <!-- Status Cataloging-->
+                                    <div class="form-group ">
+                                        <label for="optionsCataloging">Cataloging</label>
+                                        <select ng-model='statusCataloging' class="form-control" id="optionsCataloging" ng-options='value.stat as value.label group by value.group for value in statusOptionsCataloging'></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row input-area">
+                                <form class="form-horizontal">
+
+                                    <!-- Name -->
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-2" for="name">Name</label>
+                                        <div class="col-xs-10">
+                                            <input type="text" class="form-control" id="name" placeholder='Name' ng-model='fileName'>
+                                        </div>
+                                    </div>
+
+                                    <!-- Path -->
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-2" for="path">Path</label>
+                                        <div class="col-xs-10">
+                                            <input type="text" class="form-control" id="path" placeholder='Path' ng-model='filePath'>
+                                        </div>
+                                    </div>
+
+                                    <!-- Size -->
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-2" for="size">Size</label>
+                                        <div class="col-xs-10">
+                                            <input type="text" class="form-control" id="size" placeholder='Size' ng-model='fileSize'>
+                                        </div>
+                                    </div>
+
+                                    <!-- Duration -->
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-2" for="duration">Duration</label>
+                                        <div class="col-xs-10">
+                                            <input type="text" class="form-control " id="duration" placeholder='Duration' ng-model='fileDuration'>
+                                        </div>
+                                    </div>
+
+                                    <!-- Codec -->
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-2" for="codec">Codec</label>
+                                        <div class="col-xs-10">
+                                            <select ng-model='fileCodec' class="form-control" id="codec" ng-options='value.stat as value.label group by value.group for value in fileOptionsCodec'></select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Resolution -->
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-2" for="resolution">Resolution</label>
+                                        <div class="col-xs-10">
+                                            <select ng-model='fileResolution' class="form-control" id="resolution" ng-options='value.stat as value.label group by value.group for value in fileOptionsResolution'></select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Format -->
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-2" for="format">Format</label>
+                                        <div class="col-xs-10">
+                                            <select ng-model='fileFormat' class="form-control" id="format" ng-options='value.stat as value.label group by value.group for value in fileOptionsFormat'></select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Physical Type -->
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-2" for="physical">Type</label>
+                                        <div class="col-xs-10">
+                                            <select ng-model='filePhysicalType' class="form-control" id="physical" ng-options='value.stat as value.label group by value.group for value in fileOptionsPhysicalType'></select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Scan Type -->
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-2" for="scan">Scan Type</label>
+                                        <div class="col-xs-10">
+                                            <select ng-model='fileScanType' class="form-control" id="scan" ng-options='value.stat as value.label group by value.group for value in fileOptionsScanType'></select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Idiom -->
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-2" for="idiom">Idiom</label>
+                                        <div class="col-xs-10">
+                                            <select ng-model='fileIdiom' class="form-control" id="idiom" ng-options='value.stat as value.label group by value.group for value in fileOptionsIdiom'></select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Aspect -->
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-2" for="aspect">Aspect</label>
+                                        <div class="col-xs-10">
+                                            <select ng-model='fileAspect' class="form-control" id="aspect" ng-options='value for value in fileOptionsAspect'></select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Frame Rate -->
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-2" for="rate">Frame Rate</label>
+                                        <div class="col-xs-10">
+                                            <select ng-model='fileFrameRate' class="form-control" id="rate" ng-options='value for value in fileOptionsFrameRate'></select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Audio -->
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-2" for="audio">Audio</label>
+                                        <div class="col-xs-10">
+                                            <select ng-model='fileAudioTrack' class="form-control" id="audio" ng-options='value for value in fileOptionsAudioTrack'></select>
+                                        </div>
+                                    </div>
+
+                                </form>
+
+                            </div>
+
+
+                        </div>
+                        <!-- END CONTAINER-->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" ng-click="addEntry()" data-dismiss="modal">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- END MOCKUP -->
+
+
+        <div class="row">
+
+
+
+            <!-- REALTIME DISPLAY -->
+
+            <section class='displayForm'>
+                <p class='entryOutput'>{{statusIngest}}</p>
+                <p class='entryOutput'>{{statusProxy}}</p>
+                <p class='entryOutput'>{{statusCataloging}}</p>
+                <p class='entryOutput'>{{fileName}}</p>
+                <p class='entryOutput'>{{filePath}}</p>
+                <p class='entryOutput'>{{fileSize}}</p>
+                <p class='entryOutput'>{{fileDuration}}</p>
+                <p class='entryOutput'>{{fileCodec}}</p>
+                <p class='entryOutput'>{{fileResolution}}</p>
+                <p class='entryOutput'>{{fileFormat}}</p>
+                <p class='entryOutput'>{{filePhysicalType}}</p>
+                <p class='entryOutput'>{{fileScanType}}</p>
+                <p class='entryOutput'>{{fileIdiom}}</p>
+                <p class='entryOutput'>{{fileAspect}}</p>
+                <p class='entryOutput'>{{fileFrameRate}}</p>
+                <p class='entryOutput'>{{fileAudioTrack}}</p>
+            </section>
+
+            <section>
+                <ul>
+                    <li>
+                        <button type="submit" class="btn btn-primary" ng-click='updateScreen()'>Refresh</button>
+                    </li>
+                    <li>
+                        <button type="submit" class="btn btn-primary" ng-show='addBt' ng-click='addEntry()'>Add Entry</button>
+                    </li>
+                    <li>
+                        <button type="submit" class="btn btn-primary" ng-show='updateBt' ng-click='updateEntry($$watchers)'>Update Entry</button>
+                    </li>
+                    <li></li>
+                </ul>
+            </section>
+
+
+
+        </div>
+        <!-- END ROW -->
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Updated</th>
+                    <th>Created</th>
+                    <th>#</th>
+                    <th>Ingest</th>
+                    <th>Proxy</th>
+                    <th>Cataloging</th>
+                    <th>Name</th>
+                    <th>Path</th>
+                    <th>Size</th>
+                    <th>Duration</th>
+                    <th>Codec</th>
+                    <th>Resolution</th>
+                    <th>Format</th>
+                    <th>Type</th>
+                    <th>Scan</th>
+                    <th>Idiom</th>
+                    <th>Aspect</th>
+                    <th>FPS</th>
+                    <th>Audio</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat='key in allEntrys'>
+                    <td>{{key.objectId}}</td>
+                    <td>{{key.updatedAt}}</td>
+                    <td>{{key.createdAt}}</td>
+                    <td>{{$index}}</td>
+                    <td>{{key.statusIngest}}</td>
+                    <td>{{key.statusProxy}}</td>
+                    <td>{{key.statusCataloging}}</td>
+                    <td>{{key.fileName}}</td>
+                    <td>{{key.filePath}}</td>
+                    <td>{{key.fileSize}}</td>
+                    <td>{{key.fileDuration}}</td>
+                    <td>{{key.fileCodec}}</td>
+                    <td>{{key.fileResolution}}</td>
+                    <td>{{key.fileFormat}}</td>
+                    <td>{{key.filePhysicalType}}</td>
+                    <td>{{key.fileScanType}}</td>
+                    <td>{{key.fileIdiom}}</td>
+                    <td>{{key.fileAspect}}</td>
+                    <td>{{key.fileFrameRate}}</td>
+                    <td>{{key.fileAudioTrack}}</td>
+                    <td>
+                        <button type="submit" class="btn btn-primary" ng-click='deleteEntry($$watchers, $index, $event)'>Delete Entry</button>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary" ng-click='editEntry($$watchers, $index, $event)'>Edit Entry</button>
+                    </td>
+
+
+                    <!-- NG-REPEAT END -->
+                </tr>
+            </tbody>
+            <!-- END TABLE -->
+        </table>
+
+
+    </div>
+
+    <script>
+        head.js('css/bootstrap.min.css', 'css/main.css', 'js/jquery-2.1.1.min.js', 'js/bootstrap.min.js');
+    </script>
 
 </body>
+
 </html>

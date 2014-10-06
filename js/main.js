@@ -1,15 +1,74 @@
 (function(){
 
 	var app = angular.module('mapping', ['ngRoute']);
+    
+    app.controller('AlertCtrl', ['$scope', function($scope){
+        
+        $scope.successStatusAlert = false;
 
+        $scope.status = function(){
+            alert($scope.successStatusAlert);
+        };
 
-	app.controller('MainCtrl', ['$scope', 'Server', '$http', function($scope, Server, $http) {
+         $scope.setAlertSuccessOn = function(){
+            $scope.successStatusAlert = true;
+            $timeout(function(){alert("Hello");}, 500);
+        };
+
+         $scope.setAlertSuccessOff = function(){
+            $scope.successStatusAlert = false;
+        };
+
+    }]);
+    
+    /*
+	app.factory('Alerts', function(){
+        var result = 'oopa';
+        var successSettings = {
+            status: false,
+            setSuccessOn: function(){
+                successSettings.status = true;
+                result = 'shit';
+                alert(result);
+                console.log(successSettings);
+            },
+            setSuccessOff: function(){
+                successSettings.status = false;
+                console.log(successSettings);
+            }
+            
+        };
+        
+        return {
+            'successStatus' : result,
+            'setSuccessOn' : successSettings.setSuccessOn,
+            'setSuccessOff' : successSettings.setSuccessOff
+        }
+    });
+    */
+	app.controller('MainCtrl', ['$scope', 'Server', '$http', '$timeout', function($scope, Server, $http, $timeout) {
 
 		/*
 		$http.get('/js/dataOtions.js').success(function(data){
 			$scope.dataOptions = data;
 		});
 		*/
+        //ALERTS
+        
+        $scope.successStatusAlert = false;
+
+        $scope.status = function(){
+            alert($scope.successStatusAlert);
+        };
+
+         $scope.setAlertSuccessOn = function(){
+            $scope.successStatusAlert = true;
+            $timeout(function(){$scope.setAlertSuccessOff()}, 3000);
+        };
+
+         $scope.setAlertSuccessOff = function(){
+            $scope.successStatusAlert = false;
+        };
 		
 		var jsonGet = 'https://api.parse.com/1/classes/EntryList';
 		var jsonHeaders = {
@@ -387,6 +446,7 @@
 			entryList.save(null, {
 	  			success: function(callback) {
 	  				console.log('The entry was successfully saved.');
+                    $timeout(function(){$scope.setAlertSuccessOn();},1000);
 	  				$scope.updateScreen();
 	    		// The object was saved successfully.
 	  			},
@@ -438,13 +498,15 @@
 				});
 
 		}
-
+        
 		$scope.init = function () {
 	    	Parse.initialize("fzXvShP5f4swUUjZOc8vw8BgEQtjTDP5jAE0k4JG", "2cIrOXcD9BkgK6Sg40IL9dJay3883tgInhkN2iAU");
 	    	$scope.updateScreen();
 	    	$scope.addBt = true;
 	    	$scope.updateBt = false;
 	    }();
+        
+        
 
 
 	}]);
