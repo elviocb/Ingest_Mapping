@@ -4,6 +4,30 @@
     
    
 	app.controller('MainCtrl', ['$scope', 'Server', '$http', '$timeout', function($scope, Server, $http, $timeout) {
+        
+        
+        $scope.filterId = document.getElementById('ft-id').checked;
+        $scope.filterUpdated = document.getElementById('ft-updated').checked;
+        $scope.filterCreated = document.getElementById('ft-created').checked;
+        $scope.filterNumber = document.getElementById('ft-number').checked;
+        $scope.filterIngest = document.getElementById('ft-ingest').checked;            
+        $scope.filterProxy = document.getElementById('ft-proxy').checked;
+        $scope.filterCataloging = document.getElementById('ft-cataloging').checked;
+        $scope.filterName = document.getElementById('ft-name').checked;
+        $scope.filterPath = document.getElementById('ft-path').checked;
+        $scope.filterSize = document.getElementById('ft-size').checked;
+        $scope.filterDuration = document.getElementById('ft-duration').checked;
+        $scope.filterCodec = document.getElementById('ft-codec').checked;
+        $scope.filterResolution = document.getElementById('ft-resolution').checked;
+        $scope.filterFormat = document.getElementById('ft-format').checked;
+        $scope.filterType = document.getElementById('ft-type').checked;
+        $scope.filterScan = document.getElementById('ft-scan').checked;
+        $scope.filterIdiom = document.getElementById('ft-idiom').checked;
+        $scope.filterAspect = document.getElementById('ft-aspect').checked;
+        $scope.filterFps = document.getElementById('ft-fps').checked;
+        $scope.filterAudio = document.getElementById('ft-audio').checked;
+        
+      
 
 		/*
 		$http.get('/js/dataOtions.js').success(function(data){
@@ -11,7 +35,7 @@
 		});
 		*/
         
-        //ALERTS ==================================================
+        // ====== ALERTS =========================================
         
         // --- Success Alert --- //
         var setterSuccessAlert = function(status1, status2, delay){
@@ -21,7 +45,8 @@
         };
         
         
-        //DATA ===================================================
+        // ====== DATA ==========================================
+        
 		var jsonGet = 'https://api.parse.com/1/classes/EntryList';
 		var jsonHeaders = {
 				headers: {'X-Parse-Application-Id':'fzXvShP5f4swUUjZOc8vw8BgEQtjTDP5jAE0k4JG',
@@ -291,10 +316,10 @@
 
 	    };
 		
-		$scope.editEntry = function(watchers, index, e) {
-			
+		$scope.editEntry = function(watchers, index, e, elem) {
+			console.log(this);
 			e.preventDefault();
-			$scope.addBt = false;
+			$scope.saveBt = false;
 			$scope.updateBt = true;
 			$scope.stageId = watchers[watchers.length -1]['last'];
 
@@ -320,7 +345,7 @@
 		};
 		
 		$scope.updateEntry = function(watchers){
-
+            $scope.filters();
 		    $scope.addBt = true;
 			$scope.updateBt = false;
 
@@ -398,7 +423,7 @@
 			entryList.save(null, {
 	  			success: function(callback) {
 	  				console.log('The entry was successfully saved.');
-                    setterSuccessAlert(true, false, 1000);
+                    setterSuccessAlert(true, false, 2000);
 	  				$scope.updateScreen();
 	    		// The object was saved successfully.
 	  			},
@@ -451,12 +476,48 @@
 
 		}
         
-		$scope.init = function () {
+        $scope.modal = function(variable){
+            
+            if(variable == 'save'){
+                $scope.saveBt = true;
+                $scope.updateBt = false;
+            }else{
+                $scope.saveBt = false;
+                $scope.updateBt = true;
+            }
+        };
+		
+        $scope.init = function () {
 	    	Parse.initialize("fzXvShP5f4swUUjZOc8vw8BgEQtjTDP5jAE0k4JG", "2cIrOXcD9BkgK6Sg40IL9dJay3883tgInhkN2iAU");
 	    	$scope.updateScreen();
-	    	$scope.addBt = true;
+	    	$scope.saveBt = true;
 	    	$scope.updateBt = false;
-            $scope.successStatusAlert = false;
+            $scope.successStatusAlert = false; 
+            
+            //filters
+            /*
+            $scope.filterId = true;
+            $scope.filterUpdated = true;
+            $scope.filterCreated = true;
+            $scope.filterNumber = true;
+            $scope.filterIngest = true;
+            $scope.filterProxy = true;
+            $scope.filterCataloging = true;
+            $scope.filterName = true;
+            $scope.filterPath = true;
+            $scope.filterSize = true;
+            $scope.filterDuration = true;
+            $scope.filterCodec = true;
+            $scope.filterResolution = true;
+            $scope.filterFormat =  true;
+            $scope.filterType = true;
+            $scope.filterScan = true;
+            $scope.filterIdiom = true;
+            $scope.filterAspect = true;
+            $scope.filterFps = true;
+            $scope.filterAudio = true;
+            */
+
 	    }();
         
         

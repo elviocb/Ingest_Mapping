@@ -33,11 +33,11 @@
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="/">Angular Routing Example</a>
+                    <a class="navbar-brand" href="/">Ingest Mapping APP</a>
                 </div>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#"><i class="fa fa-home"></i> Home</a>
+                    <li><a href="#"><i class="fa fa-home"></i> Settings</a>
                     </li>
                     <li><a href="#about"><i class="fa fa-shield"></i> About</a>
                     </li>
@@ -47,6 +47,7 @@
             </div>
         </nav>
     </header>
+    
 
     <!-- MAIN CONTENT AND INJECTED VIEWS -->
     <div id="main">
@@ -55,23 +56,57 @@
         <!-- this is where content will be injected -->
         <div ng-view></div>
 
-
-
-
-
-
-
-
     </div>
 
     <div class='container-fluid'>
 
+        <div class="row filters">
+            <div class="col-lg-2 filter ft-busca">
+                <!-- SEARCH BAR -->
+                <form class="navbar-form navbar-left" role="search">
+                    <input type="search" placeholder="Buscar Entry" ng-model="searchInput">
+
+                </form>            
+            </div>
+            <div class="col-lg-6 filter ft-generico1">
+                <input type="checkbox" ng-checked="filterId" ng-model="filterId" id="ft-id">ID
+                <input type="checkbox" ng-checked="filterUpdated" ng-model="filterUpdated" id="ft-updated">Updated
+                <input type="checkbox" ng-checked="filterCreated" ng-model="filterCreated" id="ft-created">Created
+                <input type="checkbox" ng-checked="filterNumber" ng-model="filterNumber" id="ft-number">Number
+                <input type="checkbox" ng-checked="filterIngest" ng-model="filterIngest" id="ft-ingest">Ingest
+                <input type="checkbox" ng-checked="filterProxy" ng-model="filterProxy" id="ft-proxy">Proxy
+                <input type="checkbox" ng-checked="filterCataloging" ng-model="filterCataloging" id="ft-cataloging">Cataloging
+                <input type="checkbox" ng-checked="filterName" ng-model="filterName" id="ft-name">Name
+                <input type="checkbox" ng-checked="filterPath" ng-model="filterPath" id="ft-path">Path
+                <input type="checkbox" ng-checked="filterSize" ng-model="filterSize" id="ft-size">Size
+                <input type="checkbox" ng-checked="filterDuration" ng-model="filterDuration" id="ft-duration">Duration
+                <input type="checkbox" ng-checked="filterCodec" ng-model="filterCodec" id="ft-codec">Codec
+                <input type="checkbox" ng-checked="filterResolution" ng-model="filterResolution" id="ft-resolution">Resolution
+                <input type="checkbox" ng-checked="filterFormat" ng-model="filterFormat" id="ft-format">Format
+                <input type="checkbox" ng-checked="filterType" ng-model="filterType" id="ft-type">Type
+                <input type="checkbox" ng-checked="filterScan" ng-model="filterScan" id="ft-scan">Scan
+                <input type="checkbox" ng-checked="filterIdiom" ng-model="filterIdiom" id="ft-idiom">Idiom
+                <input type="checkbox" ng-checked="filterAspect" ng-model="filterAspect" id="ft-aspect">Aspect
+                <input type="checkbox" ng-checked="filterFps" ng-model="filterFps" id="ft-fps">FPS
+                <input type="checkbox" ng-checked="filterAudio" ng-model="filterAudio" id="ft-audio">Audio
+            </div>
+            <div class="col-lg-2 filter ft-generico2"></div>
+            <!-- REFRESH VIEW -->              
+            <div class="col-lg-1 filter ft-refresh">
+                <a href id="bt-refresh"><i class="fa fa-refresh fa-2x" ng-click="updateScreen()"></i></a>
+
+            </div>
+            <div class="col-lg-1 filter ft-entry">
+               <!-- ADD ENTRY -->
+               <button class="btn btn-primary" data-toggle="modal" data-target="#myModal" ng-click="modal('save')">
+                   <i class="fa fa-file-video-o"></i>
+                     Add Entry
+                </button>              
+            </div>
+        </div>
+        
 
         
-        <!-- Button trigger modal -->
-        <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-            Add Entry
-        </button>
 
         <!-- Modal -->
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -229,7 +264,8 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" ng-click="addEntry()" data-dismiss="modal">Save changes</button>
+                        <button type="submit" class="btn btn-primary" ng-show='updateBt' ng-click='updateEntry($$watchers)' data-dismiss="modal">Update Entry</button>
+                        <button type="button" class="btn btn-primary" ng-show='saveBt' ng-click="addEntry()" data-dismiss="modal">Save changes</button>
                     </div>
                 </div>
             </div>
@@ -264,20 +300,10 @@
                 <p class='entryOutput'>{{fileAudioTrack}}</p>
             </section>
 
-            <section>
-                <ul>
-                    <li>
-                        <button type="submit" class="btn btn-primary" ng-click='updateScreen()'>Refresh</button>
-                    </li>
-                    <li>
-                        <button type="submit" class="btn btn-primary" ng-show='addBt' ng-click='addEntry()'>Add Entry</button>
-                    </li>
-                    <li>
-                        <button type="submit" class="btn btn-primary" ng-show='updateBt' ng-click='updateEntry($$watchers)'>Update Entry</button>
-                    </li>
-                    <li></li>
-                </ul>
-            </section>
+
+                
+
+
 
 
 
@@ -287,56 +313,56 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Updated</th>
-                    <th>Created</th>
-                    <th>#</th>
-                    <th>Ingest</th>
-                    <th>Proxy</th>
-                    <th>Cataloging</th>
-                    <th>Name</th>
-                    <th>Path</th>
-                    <th>Size</th>
-                    <th>Duration</th>
-                    <th>Codec</th>
-                    <th>Resolution</th>
-                    <th>Format</th>
-                    <th>Type</th>
-                    <th>Scan</th>
-                    <th>Idiom</th>
-                    <th>Aspect</th>
-                    <th>FPS</th>
-                    <th>Audio</th>
+                    <th g-if='filterId'>ID</th>
+                    <th g-if='filterUpdated'>Updated</th>
+                    <th g-if='filterCreated'>Created</th>
+                    <th g-if='filterNumber'>#</th>
+                    <th g-if='filterIngest'>Ingest</th>
+                    <th g-if='filterProxy'>Proxy</th>
+                    <th g-if='filterCataloging'>Cataloging</th>
+                    <th g-if='filterName'>Name</th>
+                    <th g-if='filterPath'>Path</th>
+                    <th g-if='filterSize'>Size</th>
+                    <th g-if='filterDuration'>Duration</th>
+                    <th g-if='filterCodec'>Codec</th>
+                    <th g-if='filterResolution'>Resolution</th>
+                    <th g-if='filterFormat'>Format</th>
+                    <th g-if='filterType'>Type</th>
+                    <th g-if='filterScan'>Scan</th>
+                    <th g-if='filterIdiom'>Idiom</th>
+                    <th g-if='filterAspect'>Aspect</th>
+                    <th g-if='filterFps'>FPS</th>
+                    <th g-if='filterAudio'>Audio</th>
 
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat='key in allEntrys'>
-                    <td>{{key.objectId}}</td>
-                    <td>{{key.updatedAt}}</td>
-                    <td>{{key.createdAt}}</td>
-                    <td>{{$index}}</td>
-                    <td>{{key.statusIngest}}</td>
-                    <td>{{key.statusProxy}}</td>
-                    <td>{{key.statusCataloging}}</td>
-                    <td>{{key.fileName}}</td>
-                    <td>{{key.filePath}}</td>
-                    <td>{{key.fileSize}}</td>
-                    <td>{{key.fileDuration}}</td>
-                    <td>{{key.fileCodec}}</td>
-                    <td>{{key.fileResolution}}</td>
-                    <td>{{key.fileFormat}}</td>
-                    <td>{{key.filePhysicalType}}</td>
-                    <td>{{key.fileScanType}}</td>
-                    <td>{{key.fileIdiom}}</td>
-                    <td>{{key.fileAspect}}</td>
-                    <td>{{key.fileFrameRate}}</td>
-                    <td>{{key.fileAudioTrack}}</td>
+                <tr ng-repeat='key in allEntrys | filter:searchInput'>
+                    <td g-if='filterId'>{{key.objectId}}</td>
+                    <td g-if='filterUpdated'>{{key.updatedAt}}</td>
+                    <td g-if='filterCreated'>{{key.createdAt}}</td>
+                    <td g-if='filterNumber'>{{$index}}</td>
+                    <td g-if='filterIngest'>{{key.statusIngest}}</td>
+                    <td g-if='filterProxy'>{{key.statusProxy}}</td>
+                    <td g-if='filterCataloging'>{{key.statusCataloging}}</td>
+                    <td g-if='filterName'>{{key.fileName}}</td>
+                    <td g-if='filterPath'>{{key.filePath}}</td>
+                    <td g-if='filterSize'>{{key.fileSize}}</td>
+                    <td g-if='filterDuration'>{{key.fileDuration}}</td>
+                    <td g-if='filterCodec'>{{key.fileCodec}}</td>
+                    <td g-if='filterResolution'>{{key.fileResolution}}</td>
+                    <td g-if='filterFormat'>{{key.fileFormat}}</td>
+                    <td g-if='filterType'>{{key.filePhysicalType}}</td>
+                    <td g-if='filterScan'>{{key.fileScanType}}</td>
+                    <td g-if='filterIdiom'>{{key.fileIdiom}}</td>
+                    <td g-if='filterAspect'>{{key.fileAspect}}</td>
+                    <td g-if='filterFps'>{{key.fileFrameRate}}</td>
+                    <td g-if='filterAudio'>{{key.fileAudioTrack}}</td>
                     <td>
                         <button type="submit" class="btn btn-primary" ng-click='deleteEntry($$watchers, $index, $event)'>Delete Entry</button>
                     </td>
                     <td>
-                        <button type="submit" class="btn btn-primary" ng-click='editEntry($$watchers, $index, $event)'>Edit Entry</button>
+                        <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModal" ng-click='editEntry($$watchers, $index, $event, $elem)'>Edit Entry</button>
                     </td>
 
 
@@ -350,7 +376,7 @@
     </div>
 
     <script>
-        head.js('css/bootstrap.min.css', 'css/main.css', 'js/jquery-2.1.1.min.js', 'js/bootstrap.min.js');
+        head.js('css/bootstrap.min.css', 'css/main.css', 'fonts/font-awesome-4.2.0 2/css/font-awesome.min.css', 'js/jquery-2.1.1.min.js', 'js/bootstrap.min.js');
     </script>
 
 </body>
